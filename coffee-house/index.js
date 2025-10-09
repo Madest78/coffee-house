@@ -38,16 +38,21 @@ window.addEventListener('hashchange', () => {
 
 function toggleHero() {
   const hero = document.getElementById('hero');
-  const menuLink = document.querySelector('a[data-page="menu"]');
-  const homeLink = document.querySelector('a[data-page="home"]');
+  const menuLink = document.querySelectorAll('a[data-page="menu"]');
+  const homeLink = document.querySelectorAll('a[data-page="home"]');
 
   if (!hero || !menuLink || !homeLink) return;
-  menuLink.addEventListener('click', () => {
-    hero.style.display = 'none';
+
+  menuLink.forEach((link) => {
+    link.addEventListener('click', () => {
+      hero.style.display = 'none';
+    });
   });
 
-  homeLink.addEventListener('click', () => {
+  homeLink.forEach((link) => {
+    link.addEventListener('click', () => {
     hero.style.display = 'block';
+    });
   });
 }
 
