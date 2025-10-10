@@ -11,6 +11,7 @@ async function renderPage(page) {
   try {
     const html = await fetch(routes[page]).then((res) => res.text());
     document.querySelector('#app').innerHTML = html;
+    toggleHero(page);
   } catch {
     document.querySelector('#app').innerHTML = '<h1>404</h1>';
   }
@@ -19,9 +20,36 @@ async function renderPage(page) {
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a[data-page]').forEach(link => {
     link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href')
+      if (href && href.startsWith('#')) return;
       e.preventDefault();
+
       const page = link.dataset.page;
       window.location.hash = page;
+    });
+  });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const targetId = anchor.getAttribute('href').substring(1);
+      const targetEl = document.getElementById(targetId);
+
+      const currentPage = window.location.hash.replace('#', '') || 'home';
+      if (currentPage !== 'home') {
+        e.preventDefault();
+        window.location.hash = 'home';
+
+        setTimeout(() => {
+          const el = document.getElementById(targetId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+        return;
+      }
+
+      if (targetEl) {
+        e.preventDefault();
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   });
 
@@ -36,26 +64,13 @@ window.addEventListener('hashchange', () => {
 
 //==========================HERO HIDE & BACK===========================//
 
-function toggleHero() {
+function toggleHero(page) {
   const hero = document.getElementById('hero');
-  const menuLink = document.querySelectorAll('a[data-page="menu"]');
-  const homeLink = document.querySelectorAll('a[data-page="home"]');
+  if (!hero) return;
 
-  if (!hero || !menuLink || !homeLink) return;
-
-  menuLink.forEach((link) => {
-    link.addEventListener('click', () => {
-      hero.style.display = 'none';
-    });
-  });
-
-  homeLink.forEach((link) => {
-    link.addEventListener('click', () => {
+  if (page === 'menu') {
+    hero.style.display = 'none';
+  } else if (page === 'home') {
     hero.style.display = 'block';
-    });
-  });
+  }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  toggleHero();
-});
