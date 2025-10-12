@@ -123,7 +123,7 @@
   align-items: center;
   position: relative;
   gap: 100px;
-
+  height: 630px;
 }
 
 .mobile-app-offer {
@@ -135,12 +135,13 @@
 
 .ma-text-1 {
   letter-spacing: 0.04em;
-  line-height: 121%;
+  line-height: 123%;
   color: var(--text-dark);
 }
 
 .ma-text-2 {
   color: var(--text-dark);
+  line-height: 150%;
 }
 
 .buttons {
@@ -155,20 +156,36 @@
   height: 64px;
   width: 200px;
   gap: 8px;
-  padding:12px 20px;
+  padding:12px 21px;
   border: 1px solid var(--border-dark);
   border-radius: 40px;
 }
 
+.app-icon {
+  height: 36px;
+  width: 36px;
+  margin: auto 0;
+}
+
+.app-icon path {
+  fill: var(--text-dark);
+}
 
 .button-text {
-  letter-spacing: 0.036em;
   color: var(--text-dark);
 }
 
+.app-text {
+  letter-spacing: 0.02em;
+  line-height: 150%;
+}
+
+.app-name {
+  letter-spacing: 0.025em;
+  line-height: 150%;
+}
+
 .mobile-button img {
-  height: 36px;
-  width: 36px;
   color: var(--border-light);
 }
 
@@ -180,7 +197,10 @@
   color: var(--text-light);
 }
 
+.mobile-button:hover .app-icon path{
+  fill: var(--text-light);
+}
 
-.mobile-screen {
+.mobile-screens {
   flex: 1;
 }

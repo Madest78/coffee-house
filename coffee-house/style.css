@@ -226,7 +226,6 @@ nav ul li:hover .line::before {
   box-sizing: border-box;
   height: 644px;
   padding: 100px;
-  /* margin: 20px 0 100px 0; */
   border-radius: 40px;
   overflow: hidden;
 }
@@ -303,6 +302,105 @@ nav ul li:hover .line::before {
 }
 
 /* ===========================FOOTER=========================== */
-footer{
-  /* margin-top: 100px; */
+
+#contacts{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 100px;
+  gap: 100px;
+  height: 450px;
+  background-color: var(--background-container);
+  border-radius: 40px;
+}
+
+.offer,
+.contact-us {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  gap: 40px;
+  color: var(--text-light);
+}
+
+.offer {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-text {
+  letter-spacing: 0.033em;
+  line-height: 125%;
+}
+
+.social {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.ring {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  border: 1px solid var(--border-light);
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
+
+.ring a {
+  display: flex;
+  justify-content: center;
+}
+
+.ring:hover {
+  background-color: var(--background-body);
+}
+
+.ring:hover path {
+  stroke: var(--text-dark);
+}
+
+.contact-us-text {
+  letter-spacing: 0.040em;
+}
+
+.contact-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.element-wrapper{
+  width: fit-content;
+}
+
+.contact-element{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 10px;
+}
+
+.element-text {
+  display: flex;
+  letter-spacing: 0.035em;
+}
+
+.element-wrapper .line::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 100%;
+  background-color: var(--text-light);
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.contact-element:hover + .line::before {
+  width: 100%;
 }
