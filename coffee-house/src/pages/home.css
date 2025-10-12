@@ -114,3 +114,73 @@
   transform-origin: center;
   transition: transform 0.3s ease;
 }
+
+/* ==========================MOBILE APP========================== */
+
+#mobile-app {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  gap: 100px;
+
+}
+
+.mobile-app-offer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 40px;
+}
+
+.ma-text-1 {
+  letter-spacing: 0.04em;
+  line-height: 121%;
+  color: var(--text-dark);
+}
+
+.ma-text-2 {
+  color: var(--text-dark);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.mobile-button {
+  display: flex;
+  flex-direction: row;
+  height: 64px;
+  width: 200px;
+  gap: 8px;
+  padding:12px 20px;
+  border: 1px solid var(--border-dark);
+  border-radius: 40px;
+}
+
+
+.button-text {
+  letter-spacing: 0.036em;
+  color: var(--text-dark);
+}
+
+.mobile-button img {
+  height: 36px;
+  width: 36px;
+  color: var(--border-light);
+}
+
+.mobile-button:hover {
+  background-color: var(--background-container);
+}
+
+.mobile-button:hover .button-text{
+  color: var(--text-light);
+}
+
+
+.mobile-screen {
+  flex: 1;
+}

@@ -66,6 +66,12 @@ body {
   letter-spacing: 0.047em;
 }
 
+.caption {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 140%;
+}
+
 .link-button {
   font-size: 16px;
   font-weight: 600;
