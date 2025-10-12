@@ -9,8 +9,8 @@
   --text-dark: #403f3d;
   --text-light: #e1d4c9;
   --text-accent: #b0907a;
-  font-family: Inter, sans-serif;
-  font-feature-settings: 'liga' 0, 'calt' 0; /* fix for Chrome */
+  font-family: "Inter", sans-serif;
+
   /* background */
   --background-body: #e1d4c9;
   --background-container: #665F55;
@@ -21,61 +21,61 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
   margin: 0;
   padding: 20px 0 40px 0;
   gap: 100px;
   overflow-x: hidden;
+  font-family: "Inter Tight", sans-serif;
   background-color: var(--background-body);
 }
-
+/* ================================FONTS================================ */
 .headling-1 {
   font-size: 72px;
   font-weight: 600;
   line-height: 105%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  letter-spacing: 0.04em;
 }
 
 .headling-2 {
   font-size: 60px;
   font-weight: 600;
   line-height: 105%;
+  letter-spacing: 0.04em;
 }
 
 .headling-3 {
   font-size: 24px;
   font-weight: 600;
   line-height: 125%;
+  letter-spacing: 3px;
 }
 
 .accent {
+  font-family: "Inter Tight", sans-serif;
   font-style: italic;
 }
 
-.button-primary {
-  all: unset;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer; 
-  height: 64px;
-  width: 200px;
-  border-radius: 45px;
-  background-color: var(--background-body);
+.medium {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.047em;
 }
 
-.a_little_space {
-  letter-spacing: 0.01em;
+.link-button {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: 0.038em;
 }
 
-
-.button-primary a {
-  position: relative;
-  top: 3px;
-}
-
+/* =======================CONTAINER======================= */
 .container {
+  width: 1440px;
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 40px 0 40px;
@@ -83,12 +83,14 @@ body {
 }
 
 header {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  margin-bottom: 20px;
 }
 
+/* ==========================LOGO========================== */
 .logo {
   display: flex;
   position: relative;
@@ -122,6 +124,7 @@ header {
   left: 17px;
 }
 
+/* =======================NAVIGATION======================= */
 header nav ul {
   display: flex;
   list-style: none;
@@ -131,19 +134,16 @@ header nav ul {
 }
 
 nav a, button a {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 150%;
   color: var(--text-dark);
   text-decoration: none;
 }
 
 nav ul li .line {
   position: relative;
+  top: 4px;
   height: 2px;
   background-color: transparent;
   overflow: hidden;
-  margin-top: 4px;
 }
 
 nav ul li .line::before {
@@ -181,35 +181,16 @@ nav ul li:hover .line::before {
   transition: transform 0.3s ease;
 }
 
-.hero_cup {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(15px);
-  transition: all 0.3s ease;
-  position: relative;
-  height: 20px;
-  width: 20px;
-  object-fit: contain;
-  top: -2px;
-}
-
-.button-primary:hover .hero_cup,
-.button-primary:hover .menu_cup span {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0);
-}
-
 .coffee_cup {
   position: relative;
   height: 20px;
   width: 20px;
   object-fit: contain;
-  top: -2px;
 }
 
 .line {
-  position: relative; 
+  position: relative;
+  top: 4px;
   width: 100%;
   height: 2px;
   background-color: transparent;
@@ -232,12 +213,14 @@ nav ul li:hover .line::before {
   width: 100%;
 }
 
+/* ===========================HERO=========================== */
+
 #hero {
   position: relative;
   box-sizing: border-box;
   height: 644px;
   padding: 100px;
-  margin: 20px 0 100px 0;
+  /* margin: 20px 0 100px 0; */
   border-radius: 40px;
   overflow: hidden;
 }
@@ -265,14 +248,55 @@ nav ul li:hover .line::before {
   color: var(--text-light);
 }
 
-.hero-text-2 {
-  line-height: 24px;
-}
-
 .enjoy {
   color: var(--text-accent);
 }
 
+.a_little_space {
+  letter-spacing: 2px;
+}
+
+.hero-text-2 {
+  line-height: 24px;
+}
+
+.button-primary {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; 
+  height: 64px;
+  width: 200px;
+  border-radius: 45px;
+  background-color: var(--background-body);
+}
+
+.button-primary a {
+  position: relative;
+  top: 3px;
+}
+
+.hero_cup {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(15px);
+  transition: all 0.3s ease;
+  position: relative;
+  height: 20px;
+  width: 20px;
+  object-fit: contain;
+  top: -2px;
+}
+
+.button-primary:hover .hero_cup,
+.button-primary:hover .menu_cup span {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* ===========================FOOTER=========================== */
 footer{
-  margin-top: 100px;
+  /* margin-top: 100px; */
 }

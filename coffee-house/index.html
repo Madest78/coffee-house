@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://rsms.me/">
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">  <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-oHDEc8Xed3ok+I+c8D9j3uK8HhZ+yQwM2RZ39FjKqk00vUdozZ2pE+F1Ltnr6pm2yZcF9nYwXG51v3YDb5B5yQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="./src/pages/home.css">
   <title>Coffee House</title>
 </head>
 <body>
-  <div class="container header__inner">
+  <div class="container">
     <header>
       <a href="#" data-page="home">
         <div class="logo">
@@ -27,7 +27,7 @@
           </div>
         </div>
       </a>
-      <nav>
+      <nav class="link-button">
         <ul>
           <li>
             <a href="#favorite-cofee">Favorite coffee</a>
@@ -47,7 +47,7 @@
           </li>
         </ul>
       </nav>
-      <nav>
+      <nav class="link-button">
         <a data-page="menu" class="menu">
           <div class="menu_cup">
             Menu
@@ -64,10 +64,10 @@
       </video>
       <div class="offer">
         <p class="headling-1 hero-text"><span class="accent enjoy">Enjoy</span> premium co<span class="a_little_space">f</span>fee at our charming cafe</p>
-        <p class="hero-text hero-text-2">With its inviting atmosphere and delicious coffee options, the Coffee House Resource is a popular destination for coffee lovers and those seeking a warm and inviting space to enjoy their favorite beverage.</p>
+        <p class="medium hero-text hero-text-2">With its inviting atmosphere and delicious coffee options, the Coffee House Resource is a popular destination for coffee lovers and those seeking a warm and inviting space to enjoy their favorite beverage.</p>
         <button class="button-primary">
           <a data-page="menu" class="menu">
-            <div class="menu_cup">
+            <div class="menu_cup link-button">
               <span>Menu</span>
               <img src="/coffee-house/src/images/icons/coffee-cup.png" alt="cup" class="coffee_cup hero_cup">
             </div>

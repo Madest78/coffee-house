@@ -12,6 +12,9 @@ async function renderPage(page) {
     const html = await fetch(routes[page]).then((res) => res.text());
     document.querySelector('#app').innerHTML = html;
     toggleHero(page);
+    if (page === 'home') {
+      initCarousel();
+    }
   } catch {
     document.querySelector('#app').innerHTML = '<h1>404</h1>';
   }
@@ -73,4 +76,62 @@ function toggleHero(page) {
   } else if (page === 'home') {
     hero.style.display = 'block';
   }
+}
+
+//=============================CAROUSEL================================//
+
+function initCarousel() {
+  const slides = [
+    {
+      img: "/coffee-house/src/images/favorite-coffee/coffee-slider-1.png",
+      name: "S’mores Frappuccino",
+      text: "This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk.",
+      price: "$5.50"
+    },
+    {
+      img: "/coffee-house/src/images/favorite-coffee/coffee-slider-2.png",
+      name: "Caramel Macchiato",
+      text: "Fragrant and unique classic espresso with rich caramel-peanut syrup, with cream under whipped thick foam.",
+      price: "$5.00"
+    },
+    {
+      img: "/coffee-house/src/images/favorite-coffee/coffee-slider-3.png",
+      name: "Ice coffee",
+      text: "A popular summer drink that tones and invigorates. Prepared from coffee, milk and ice.",
+      price: "$4.50"
+    }
+  ];
+
+
+  const carouselImg = document.getElementById('carousel-img');
+  const carouselName = document.getElementById('carousel-name');
+  const carouselText = document.getElementById('carousel-text')
+  const carouselPrice = document.getElementById('carousel-price')
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+
+  if (!carouselImg) return;
+
+  let current = 0;
+  const total = slides.length;
+
+  function updateSlide() {
+    const slide = slides[current];
+    carouselImg.src = slide.img;
+    carouselName.textContent = slide.name;
+    carouselText.textContent = slide.text;
+    carouselPrice.textContent = slide.price;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    current = (current + 1) % total;
+    updateSlide();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    current = (current - 1 + total) % total;
+    updateSlide();
+  });
+
+  updateSlide();
 }
