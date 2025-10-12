@@ -14,6 +14,8 @@ async function renderPage(page) {
     toggleHero(page);
     if (page === 'home') {
       initCarousel();
+    } else if (page === 'menu') {
+      initMenuPage();
     }
   } catch {
     document.querySelector('#app').innerHTML = '<h1>404</h1>';
@@ -134,4 +136,62 @@ function initCarousel() {
   });
 
   updateSlide();
+}
+
+// ============================MENU SHEET============================ //
+
+function initMenuPage() {
+  const menuSheet = document.getElementById("menu-sheet");
+  const buttons = document.querySelectorAll(".menu-buttons li a");
+  const url = "https://raw.githubusercontent.com/rolling-scopes-school/qualifying-stage/main/tasks/coffee-shop-layout/products.json";
+  
+  let products = [];
+  
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      products = data;
+      renderGrid("coffee");
+    });
+
+  function renderGrid(category) {
+    const filtered = products.filter(item => item.category === category);
+
+    const gridHTML = `
+      <div class="menu-grid">
+        ${filtered.map((item, index) => `
+          <div class="menu-card">
+            <a href="#">
+              <div class="card-img">
+                <img src="/coffee-house/src/images/${category}/${category}-${index + 1}.jpg" alt="${item.name}">
+              </div>
+              <div class="card-content">
+                <p class="card-name">${item.name}</p>
+                <p class="card-description">${item.description}</p>
+                <p class="card-price">$${item.price}</p>
+              </div>
+            </a>
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+    menuSheet.innerHTML = gridHTML;
+  }
+
+  function setActiveButton(category) {
+    buttons.forEach(btn => {
+      const btnCategory = btn.querySelector('p:last-child').textContent.toLowerCase();
+      btn.classList.toggle('active', btnCategory === category);
+    });
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      const category = btn.querySelector('p:last-child').textContent.toLowerCase();
+      setActiveButton(category);
+      renderGrid(category);
+    });
+  });
 }

@@ -27,7 +27,6 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 20px 0 40px 0;
-  gap: 100px;
   overflow-x: hidden;
   font-family: "Inter Tight", sans-serif;
   background-color: var(--background-body);
@@ -86,6 +85,10 @@ body {
   margin: 0 auto;
   padding: 0 40px 0 40px;
   box-sizing: border-box;
+}
+
+.container:last-of-type {
+  margin-bottom: 0;
 }
 
 header {
@@ -300,8 +303,63 @@ nav ul li:hover .line::before {
   visibility: visible;
   transform: translateX(0);
 }
+/* ============================MAIN============================ */
+
+.main {
+  margin: 0 auto 0 auto;
+}
+
+/* ==========================MENU GRID========================== */
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.menu-card {
+  border: 1px solid var(--border-dark);
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.menu-card:hover .card-img{
+  transform: translate(-50%, -50%) scale(0.9);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.card-img img {
+  height: 310px;
+  width: 310px;
+}
+
+.card-content {
+
+}
+
+.card-name {
+
+}
+
+.card-description {
+
+}
+
+.card-price {
+
+}
+
 
 /* ===========================FOOTER=========================== */
+
+.footer {
+  margin: 100px 0 40px 0;
+  margin: 0 auto;
+}
 
 #contacts{
   display: flex;

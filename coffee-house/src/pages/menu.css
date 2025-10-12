@@ -1,0 +1,87 @@
+:root {
+  /* text */
+  --text-dark: #403f3d;
+  --text-light: #e1d4c9;
+  --text-accent: #b0907a;
+  /* background */
+  --background-body: #e1d4c9;
+  --background-container: #665F55;
+  --background-backdrop: #403f3dcc;
+  /* border */
+  --border-light: #c1b6ad;
+  --border-dark: #665F55;
+}
+/* ======================MENU====================== */
+.menu_body {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+}
+
+.menu-text {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  letter-spacing: 0.04em;
+  line-height: 125%;
+  color: var(--text-dark);
+}
+
+.menu-buttons ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+}
+
+.menu-buttons a {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px 8px 8px;
+  gap: 8px;
+}
+
+.menu-ring {
+  width: 30px;
+  height: 30px;
+  background-color: var(--border-light);
+}
+
+.menu-buttons ul li p.active {
+  color: var(--text-light);
+}
+
+.menu-ring.active {
+  background-color: var(--background-body);
+}
+
+.menu-nav ul li .active {
+  list-style: none;
+  margin: 0;
+  background-color: var(--background-container);
+  border-radius: 40px;
+}
+
+.menu-nav ul li {
+  list-style: none;
+  margin: 0;
+  border: 1px solid var(--border-dark);
+  border-radius: 40px;
+}
+
+#menu-sheet {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
