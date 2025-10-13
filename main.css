@@ -513,29 +513,64 @@ nav ul li:hover .line::before {
   list-style: none;
 }
 
+.carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 #favorite-cofee {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 799px;
+  width: 100%;
   gap: 40px;
 }
 
-.carousel-wrapper {
-  width: 100%;
+.carousel-slider {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
 .carousel {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 
 .carousel-track {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+}
+
+#carousel-img {
+  width: 480px;
+  height: 480px;
+  margin-bottom: 40px;
+}
+
+#carousel-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 480px;
+}
+
+.prev, .next {
+  width: 60px;
+  height: 60px;
+  border: 1px solid var(--border-dark);
+  border-radius: 50%;
+  background-color: transparent;
 }
 
 /* ========================ABOUT======================== */
