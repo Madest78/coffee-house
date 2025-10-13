@@ -311,13 +311,6 @@ nav ul li:hover .line::before {
 
 /* ==========================MENU GRID========================== */
 
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-top: 20px;
-}
-
 .menu-card {
   border: 1px solid var(--border-dark);
   border-radius: 12px;
@@ -327,7 +320,7 @@ nav ul li:hover .line::before {
 }
 
 .menu-card:hover .card-img{
-  transform: translate(-50%, -50%) scale(0.9);
+  transform: translate(50%, 50%) scale(0.9);
   transform-origin: center;
   transition: transform 0.3s ease;
 }
@@ -335,22 +328,6 @@ nav ul li:hover .line::before {
 .card-img img {
   height: 310px;
   width: 310px;
-}
-
-.card-content {
-
-}
-
-.card-name {
-
-}
-
-.card-description {
-
-}
-
-.card-price {
-
 }
 
 

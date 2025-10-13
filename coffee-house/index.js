@@ -1,15 +1,20 @@
 //==========================CONFIG============================//
+import './style.css';
+import './src/pages/home.css';
+import './src/pages/menu.css';
+import homeTemplate from './src/pages/home.html';
+import menuTemplate from './src/pages/menu.html';
 
 const routes = {
-  home: './src/pages/home.html',
-  menu: './src/pages/menu.html'
+  home: homeTemplate,
+  menu: menuTemplate,
 };
 
 //==========================ROUTING===========================//
 
 async function renderPage(page) {
   try {
-    const html = await fetch(routes[page]).then((res) => res.text());
+    const html = routes[page];
     document.querySelector('#app').innerHTML = html;
     toggleHero(page);
     if (page === 'home') {
@@ -82,22 +87,26 @@ function toggleHero(page) {
 
 //=============================CAROUSEL================================//
 
+import slide1 from './src/images/favorite-coffee/coffee-slider-1.png';
+import slide2 from './src/images/favorite-coffee/coffee-slider-2.png';
+import slide3 from './src/images/favorite-coffee/coffee-slider-3.png';
+
 function initCarousel() {
   const slides = [
     {
-      img: "/coffee-house/src/images/favorite-coffee/coffee-slider-1.png",
+      img: slide1,
       name: "S’mores Frappuccino",
       text: "This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk.",
       price: "$5.50"
     },
     {
-      img: "/coffee-house/src/images/favorite-coffee/coffee-slider-2.png",
+      img: slide2,
       name: "Caramel Macchiato",
       text: "Fragrant and unique classic espresso with rich caramel-peanut syrup, with cream under whipped thick foam.",
       price: "$5.00"
     },
     {
-      img: "/coffee-house/src/images/favorite-coffee/coffee-slider-3.png",
+      img: slide3,
       name: "Ice coffee",
       text: "A popular summer drink that tones and invigorates. Prepared from coffee, milk and ice.",
       price: "$4.50"
@@ -140,6 +149,16 @@ function initCarousel() {
 
 // ============================MENU SHEET============================ //
 
+function importAll(r) {
+  return r.keys().map(r);
+}
+
+const images = {
+  coffee: importAll(require.context('./src/images/coffee', false, /\.(png|jpe?g|svg)$/)),
+  tea: importAll(require.context('./src/images/tea', false, /\.(png|jpe?g|svg)$/)),
+  dessert: importAll(require.context('./src/images/dessert', false, /\.(png|jpe?g|svg)$/))
+};
+
 function initMenuPage() {
   const menuSheet = document.getElementById("menu-sheet");
   const buttons = document.querySelectorAll(".menu-buttons li a");
@@ -158,12 +177,11 @@ function initMenuPage() {
     const filtered = products.filter(item => item.category === category);
 
     const gridHTML = `
-      <div class="menu-grid">
         ${filtered.map((item, index) => `
           <div class="menu-card">
             <a href="#">
               <div class="card-img">
-                <img src="/coffee-house/src/images/${category}/${category}-${index + 1}.jpg" alt="${item.name}">
+                <img src="${images[category][index]}" alt="${item.name}">
               </div>
               <div class="card-content">
                 <p class="card-name">${item.name}</p>
