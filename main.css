@@ -327,7 +327,7 @@ nav ul li:hover .line::before {
 }
 
 .menu-card:hover .card-img{
-  transform: translate(-50%, -50%) scale(0.9);
+  transform: translate(50%, 50%) scale(0.9);
   transform-origin: center;
   transition: transform 0.3s ease;
 }
@@ -336,22 +336,6 @@ nav ul li:hover .line::before {
   height: 310px;
   width: 310px;
 }
-
-/* .card-content {
-
-}
-
-.card-name {
-
-}
-
-.card-description {
-
-}
-
-.card-price {
-
-} */
 
 
 /* ===========================FOOTER=========================== */
