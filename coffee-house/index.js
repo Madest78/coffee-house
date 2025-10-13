@@ -144,6 +144,11 @@ function initCarousel() {
     updateSlide();
   });
 
+  setInterval(() => {
+    current = (current + 1) % total;
+    updateSlide();
+  }, 5000);
+
   updateSlide();
 }
 
@@ -184,9 +189,13 @@ function initMenuPage() {
                 <img src="${images[category][index]}" alt="${item.name}">
               </div>
               <div class="card-content">
-                <p class="card-name">${item.name}</p>
-                <p class="card-description">${item.description}</p>
-                <p class="card-price">$${item.price}</p>
+                <div class="card-text headling-3">
+                  <p class="card-name">${item.name}</p>
+                  <p class="card-description medium">${item.description}</p>
+                </div>
+                <div class="card-content-price headling-3">
+                  <p class="card-price">$${item.price}</p>
+                </div>
               </div>
             </a>
           </div>

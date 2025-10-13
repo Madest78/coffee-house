@@ -12,6 +12,10 @@
   --border-dark: #665F55;
 }
 /* ======================MENU====================== */
+#menu {
+
+}
+
 .menu_body {
   display: flex;
   justify-content: center;
@@ -20,6 +24,7 @@
 .menu-nav {
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   gap: 40px;
   width: 100%;
   max-width: 800px;
@@ -82,6 +87,6 @@
 #menu-sheet {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-bottom: 100px;
+  gap: 40px;
+  margin: 40px 0 100px 0;
 }
