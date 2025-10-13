@@ -315,7 +315,6 @@ nav ul li:hover .line::before {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  margin-top: 20px;
 }
 
 .menu-card {
