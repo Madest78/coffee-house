@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 :root {
   /* text */
   --text-dark: #403f3d;
@@ -313,23 +318,56 @@ nav ul li:hover .line::before {
 
 .menu-card {
   border: 1px solid var(--border-dark);
-  border-radius: 12px;
+  border-radius: 40px;
   overflow: hidden;
   text-align: center;
   transition: transform 0.2s ease;
 }
 
-.menu-card:hover .card-img{
-  transform: translate(50%, 50%) scale(0.9);
+.menu-card:hover .card-img img{
+  transform: scale(0.95);
   transform-origin: center;
   transition: transform 0.3s ease;
 }
 
-.card-img img {
-  height: 310px;
+.card-img {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
   width: 310px;
+  height: 310px;
+  border-radius: 40px;
+  overflow: hidden;
 }
 
+.card-text{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 196px;
+  padding: 20px;
+}
+
+.card-name, .card-content-price {
+  text-align: left;
+  letter-spacing: 0.035em;
+  line-height: 115%;
+  color: var(--text-dark);
+}
+
+.card-description {
+  text-align: left;
+  letter-spacing: 0.045em;
+  line-height: 150%;
+  color: var(--text-dark);
+}
 
 /* ===========================FOOTER=========================== */
 
@@ -659,6 +697,10 @@ nav ul li:hover .line::before {
   --border-dark: #665F55;
 }
 /* ======================MENU====================== */
+#menu {
+
+}
+
 .menu_body {
   display: flex;
   justify-content: center;
@@ -667,6 +709,7 @@ nav ul li:hover .line::before {
 .menu-nav {
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   gap: 40px;
   width: 100%;
   max-width: 800px;
@@ -729,6 +772,6 @@ nav ul li:hover .line::before {
 #menu-sheet {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-bottom: 100px;
+  gap: 40px;
+  margin: 40px 0 100px 0;
 }
