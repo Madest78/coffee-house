@@ -4,50 +4,58 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './coffee-house/index.js', // путь к твоему main JS
+  entry: './coffee-house/index.ts',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '',
-    clean: true, // чистит dist перед сборкой
+    clean: true,
   },
   module: {
     rules: [
-        {
-          test: /\.css$/i,
-          use: [MiniCssExtractPlugin.loader, 'css-loader'], // собираем CSS в файл
-        },
-        {
-          test: /\.html$/i,
-          loader: 'html-loader', // чтобы импорты html в JS работали
-        },
-        {
-          test: /\.(png|jpe?g|svg|ico)$/i,
-          type: 'asset/resource', // копирует картинки и возвращает путь
-          generator: {
-          filename: 'images/[name][ext]', // кладём их в dist/images
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
+      },
+      {
+        test: /\.(png|jpe?g|svg|ico)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name][ext]',
         },
       },
     ],
   },
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './coffee-house/index.html', // твой основной HTML
+      template: './coffee-house/index.html',
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: './coffee-house/src/images', to: 'images' }, // копируем все картинки
+        { from: './coffee-house/src/images', to: 'images' },
       ],
     }),
   ],
-devServer: {
-  static: './dist', // откуда сервер отдаёт файлы
-  port: 3000,       // порт, на котором будет локальный сервер
-  open: true,       // автоматически откроет браузер
-  historyApiFallback: true, // важно для SPA: все пути ведут на index.html
-},
+  devServer: {
+    static: './dist',
+    port: 3000,
+    open: true,
+    historyApiFallback: true,
+  },
   mode: 'development',
 };

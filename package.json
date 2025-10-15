@@ -2,7 +2,7 @@
   "name": "coffee-house",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
@@ -22,6 +22,7 @@
   },
   "homepage": "https://Madest78.github.io/coffee-house",
   "devDependencies": {
+    "@types/webpack-env": "^1.18.8",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
     "gh-pages": "^6.3.0",
@@ -29,6 +30,8 @@
     "html-webpack-plugin": "^5.6.4",
     "mini-css-extract-plugin": "^2.9.4",
     "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.3",
     "webpack": "^5.102.0",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2"
