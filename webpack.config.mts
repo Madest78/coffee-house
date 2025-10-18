@@ -1,20 +1,21 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
 
-module.exports = {
+export default {
   entry: './coffee-house/index.ts',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve('./dist'),
     publicPath: '',
     clean: true,
   },
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.ts$/i,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
@@ -36,7 +37,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.mts', '.js', '.mjs'],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -49,6 +50,11 @@ module.exports = {
       patterns: [
         { from: './coffee-house/src/images', to: 'images' },
       ],
+    }),
+    new ESLintPlugin({
+      extensions: ['ts', 'mts', 'js', 'mjs'],
+      exclude: 'node_modules',
+      overrideConfigFile: './.eslintrc.cjs',
     }),
   ],
   devServer: {

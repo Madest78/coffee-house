@@ -8,6 +8,10 @@ import './src/pages/menu.css';
 import homeTemplate from './src/pages/home.html';
 import menuTemplate from './src/pages/menu.html';
 
+import { getFavoriteCoffees } from './src/services/favorites.service';
+
+import type { CoffeeProduct } from './src/types/coffee';
+
 import slide1 from './src/images/favorite-coffee/coffee-slider-1.png';
 import slide2 from './src/images/favorite-coffee/coffee-slider-2.png';
 import slide3 from './src/images/favorite-coffee/coffee-slider-3.png';
@@ -56,14 +60,14 @@ async function renderPage(page: string) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initAnchors() {
   document.querySelectorAll<HTMLAnchorElement>('a[data-page]').forEach(link => {
     link.addEventListener('click', e => {
-      const href = link.getAttribute('href');
-      if (href?.startsWith('#')) return;
       e.preventDefault();
       const page = link.dataset.page;
-      if (page) window.location.hash = page;
+      if (page) {
+        window.location.hash = page;
+      }
     });
   });
 
@@ -71,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
     anchor.addEventListener('click', e => {
       const targetId = anchor.getAttribute('href')?.substring(1);
       if (!targetId) return;
-
       const currentPage = window.location.hash.replace('#', '') || 'home';
       if (currentPage !== 'home') {
         e.preventDefault();
@@ -79,13 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
         }, 300);
-        return;
+      } else {
+        e.preventDefault();
+        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
       }
-
-      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
     });
   });
+}
 
+document.addEventListener('DOMContentLoaded', () => {
+  initAnchors();
   renderPage(window.location.hash.replace('#', '') || 'home');
 });
 
@@ -101,63 +107,105 @@ function toggleHero(page: string) {
 }
 
 //==========================CAROUSEL===========================//
-function initCarousel() {
-  const slides: Slide[] = [
-    {
-      img: slide1,
-      name: "S’mores Frappuccino",
-      text: "This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk.",
-      price: "$5.50",
-    },
-    {
-      img: slide2,
-      name: "Caramel Macchiato",
-      text: "Fragrant and unique classic espresso with rich caramel-peanut syrup, with cream under whipped thick foam.",
-      price: "$5.00",
-    },
-    {
-      img: slide3,
-      name: "Ice coffee",
-      text: "A popular summer drink that tones and invigorates. Prepared from coffee, milk and ice.",
-      price: "$4.50",
-    },
-  ];
+export async function initCarousel() {
+  const carouselTrack = document.getElementsByClassName('carousel-track')[0];
+  if (!carouselTrack) return;
 
-  const carouselImg = document.getElementById('carousel-img') as HTMLImageElement | null;
-  const carouselName = document.getElementById('carousel-name');
-  const carouselText = document.getElementById('carousel-text');
-  const carouselPrice = document.getElementById('carousel-price');
-  const prevBtn = document.querySelector<HTMLButtonElement>('.prev');
-  const nextBtn = document.querySelector<HTMLButtonElement>('.next');
+  carouselTrack.innerHTML = `
+    <div class="skeleton-img"></div>
+    <div id="carousel-description">
+      <div class="skeleton-text skeleton-name"></div>
+      <div class="skeleton-text skeleton-desc"></div>
+      <div class="skeleton-price"></div>
+    </div>
+  `;
 
-  if (!carouselImg || !carouselName || !carouselText || !carouselPrice || !prevBtn || !nextBtn) return;
+  try {
+    const coffee = await getFavoriteCoffees();
+    if (!coffee.length) throw new Error("No coffee found");
 
-  let current = 0;
+    const localImages = [slide1, slide2, slide3];
+    const slides: Slide[] = coffee.map((c, i) => ({
+      img: localImages[i % localImages.length],
+      name: c.name,
+      text: c.description,
+      price: `$${c.discountPrice}`,
+    }));
 
-  function updateSlide() {
-    const slide = slides[current];
-    carouselImg!.src = slide.img;
-    carouselName!.textContent = slide.name;
-    carouselText!.textContent = slide.text;
-    carouselPrice!.textContent = slide.price;
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    carouselTrack.innerHTML = `
+      <img id="carousel-img" alt="slide">
+      <div id="carousel-description">
+        <p id="carousel-name" class="headling-3"></p>
+        <p id="carousel-text" class="medium"></p>
+        <p id="carousel-price" class="headling-3"></p>
+      </div>
+    `;
+
+    const carouselImg = document.getElementById('carousel-img') as HTMLImageElement;
+    const carouselName = document.getElementById('carousel-name')!;
+    const carouselText = document.getElementById('carousel-text')!;
+    const carouselPrice = document.getElementById('carousel-price')!;
+    const prevBtn = document.querySelector<HTMLButtonElement>('.prev')!;
+    const nextBtn = document.querySelector<HTMLButtonElement>('.next')!;
+
+    let current = 0;
+
+    const progressBarContainer = document.querySelector('.progress-bar')!;
+    progressBarContainer.innerHTML = slides.map(() => `<div class="carousel-line"><div class="fill"></div></div>`).join('');
+
+    const fills = document.querySelectorAll<HTMLDivElement>('.carousel-line .fill');
+
+    function updateProgress() {
+      const fills = document.querySelectorAll<HTMLDivElement>('.carousel-line .fill');
+
+      fills.forEach((fill, i) => {
+        if (i === current) {
+          fill.style.transition = 'width 5s linear';
+          fill.style.width = '100%';
+        } else {
+          fill.style.transition = 'none';
+          fill.style.width = '0%';
+        }
+      });
+    }
+
+    function updateSlide() {
+      const slide = slides[current];
+      carouselImg.src = slide.img;
+      carouselName.textContent = slide.name;
+      carouselText.textContent = slide.text;
+      carouselPrice.textContent = slide.price;
+
+      fills.forEach(fill => fill.style.transition = 'none');
+      setTimeout(updateProgress, 50);
+    }
+
+    nextBtn.addEventListener('click', () => {
+      current = (current + 1) % slides.length;
+      updateSlide();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      current = (current - 1 + slides.length) % slides.length;
+      updateSlide();
+    });
+
+    updateSlide();
+    setInterval(() => {
+      current = (current + 1) % slides.length;
+      updateSlide();
+    }, 5000);
+
+  } catch (err) {
+    carouselTrack.innerHTML = `
+      <p class="error">
+        Something wrong! Plaesr reboot the page
+      </p>
+    `;
+    console.error(err);
   }
-
-  nextBtn.addEventListener('click', () => {
-    current = (current + 1) % slides.length;
-    updateSlide();
-  });
-
-  prevBtn.addEventListener('click', () => {
-    current = (current - 1 + slides.length) % slides.length;
-    updateSlide();
-  });
-
-  setInterval(() => {
-    current = (current + 1) % slides.length;
-    updateSlide();
-  }, 5000);
-
-  updateSlide();
 }
 
 //==========================MENU===========================//

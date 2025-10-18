@@ -1,6 +1,7 @@
 {
   "name": "coffee-house",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.ts",
   "scripts": {
@@ -22,16 +23,24 @@
   },
   "homepage": "https://Madest78.github.io/coffee-house",
   "devDependencies": {
+    "@eslint/js": "^9.38.0",
     "@types/webpack-env": "^1.18.8",
+    "@typescript-eslint/eslint-plugin": "^8.46.1",
+    "@typescript-eslint/parser": "^8.46.1",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
+    "eslint": "^9.38.0",
+    "eslint-webpack-plugin": "^5.0.2",
     "gh-pages": "^6.3.0",
+    "globals": "^16.4.0",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.4",
+    "jiti": "^2.6.1",
     "mini-css-extract-plugin": "^2.9.4",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.4",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.1",
     "webpack": "^5.102.0",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2"
