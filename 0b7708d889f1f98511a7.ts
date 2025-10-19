@@ -12,8 +12,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import './style.css';
 import './src/pages/home.css';
 import './src/pages/menu.css';
+import './src/pages/modal.css';
 import homeTemplate from './src/pages/home.html';
 import menuTemplate from './src/pages/menu.html';
+import modalTemplate from './src/pages/modal.html';
 import { getFavoriteCoffees } from './src/services/favorites.service';
 import slide1 from './src/images/favorite-coffee/coffee-slider-1.png';
 import slide2 from './src/images/favorite-coffee/coffee-slider-2.png';
@@ -277,34 +279,27 @@ function initMenuPage() {
 }
 //==========================MODAL===========================//
 function initSimpleModal() {
-    let modal = document.getElementById('simple-modal');
-    if (!modal) {
-        modal = document.createElement('div');
-        modal.id = 'simple-modal';
-        modal.style.position = 'fixed';
-        modal.style.top = '50%';
-        modal.style.left = '50%';
-        modal.style.transform = 'translate(-50%, -50%)';
-        modal.style.padding = '20px';
-        modal.style.backgroundColor = 'white';
-        modal.style.border = '2px solid black';
-        modal.style.display = 'none';
-        modal.style.zIndex = '1000';
-        modal.textContent = 'MODAL';
-        document.body.appendChild(modal);
+    if (!document.getElementById('simple-modal')) {
+        document.body.insertAdjacentHTML('beforeend', modalTemplate);
     }
+    const modal = document.getElementById('simple-modal');
+    const modalContent = document.getElementById('modal-content');
     modal.addEventListener('click', () => {
         modal.style.display = 'none';
     });
-    const cards = document.querySelectorAll('.menu-card');
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            modal.style.display = 'block';
-        });
+    const menuSheet = document.getElementById('menu-sheet');
+    menuSheet.addEventListener('click', (e) => {
+        const card = e.target.closest('.menu-card');
+        if (!card)
+            return;
+        const cardId = card.getAttribute('data-id');
+        const cardName = card.getElementsByClassName('card-name')[0];
+        modalContent.textContent = `ID: ${cardId}`;
+        modalContent.textContent = `Name: ${cardName.textContent}`;
+        modal.style.display = 'block';
     });
 }
-document.addEventListener('DOMContentLoaded', () => {
-    initMenuPage().then(() => {
-        initSimpleModal();
-    });
-});
+document.addEventListener('DOMContentLoaded', () => __awaiter(void 0, void 0, void 0, function* () {
+    yield initMenuPage();
+    initSimpleModal();
+}));
