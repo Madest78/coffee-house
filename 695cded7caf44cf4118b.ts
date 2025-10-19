@@ -12,7 +12,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import './style.css';
 import './src/pages/home.css';
 import './src/pages/menu.css';
-import './src/pages/modal.css';
 import homeTemplate from './src/pages/home.html';
 import menuTemplate from './src/pages/menu.html';
 import { getFavoriteCoffees } from './src/services/favorites.service';
@@ -28,7 +27,6 @@ function importAll(r) {
 const routes = {
     home: homeTemplate,
     menu: menuTemplate,
-    modal: menuTemplate,
 };
 //==========================ROUTING===========================//
 function renderPage(page) {
@@ -278,60 +276,35 @@ function initMenuPage() {
     });
 }
 //==========================MODAL===========================//
-function loadModal() {
-    return __awaiter(this, void 0, void 0, function* () {
-        // 1. Подгружаем HTML
-        const res = yield fetch('/modal.html');
-        const html = yield res.text();
-        document.body.insertAdjacentHTML('beforeend', html);
-        // 2. Подгружаем CSS
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = '/modal.css';
-        document.head.appendChild(link);
-        // 3. Теперь элементы модалки реально есть
-        const modal = document.getElementById('modal-overlay');
-        const closeBtn = document.getElementById('modal-close');
-        const modalImg = document.getElementById('modal-product-img');
-        const modalName = document.getElementById('modal-product-name');
-        const modalDesc = document.getElementById('modal-product-desc');
-        const modalPrice = document.getElementById('modal-product-price');
-        if (!modal || !closeBtn || !modalImg || !modalName || !modalDesc || !modalPrice) {
-            console.error('Modal elements not found in DOM');
-            return;
-        }
-        // 4. Навешиваем обработчики на карточки
-        const cards = document.querySelectorAll('.menu-card');
-        cards.forEach(card => {
-            card.addEventListener('click', () => __awaiter(this, void 0, void 0, function* () {
-                const productId = card.getAttribute('data-id');
-                if (!productId)
-                    return;
-                const response = yield fetch(`https://6kt29kkeub.execute-api.eu-central-1.amazonaws.com/products/${productId}`);
-                const product = (yield response.json()).data;
-                const category = product.category;
-                modalImg.src = images[category][0];
-                modalName.textContent = product.name;
-                modalDesc.textContent = product.description;
-                modalPrice.textContent = `$${parseFloat(product.discountPrice || product.price).toFixed(2)}`;
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }));
-        });
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-        });
-        modal.addEventListener('click', e => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = '';
-            }
+function initSimpleModal() {
+    let modal = document.getElementById('simple-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'simple-modal';
+        modal.style.position = 'fixed';
+        modal.style.top = '50%';
+        modal.style.left = '50%';
+        modal.style.transform = 'translate(-50%, -50%)';
+        modal.style.padding = '20px';
+        modal.style.backgroundColor = 'white';
+        modal.style.border = '2px solid black';
+        modal.style.display = 'none';
+        modal.style.zIndex = '1000';
+        modal.textContent = 'MODAL';
+        document.body.appendChild(modal);
+    }
+    modal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+    const cards = document.querySelectorAll('.menu-card');
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            modal.style.display = 'block';
         });
     });
 }
 document.addEventListener('DOMContentLoaded', () => {
     initMenuPage().then(() => {
-        loadModal(); // вызываем только после рендера карточек
+        initSimpleModal();
     });
 });
