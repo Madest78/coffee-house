@@ -25,10 +25,12 @@ type Slide = {
 };
 
 type Product = {
+  id: number;
   name: string;
   description: string;
+  price: string;
+  discountPrice: string | null;
   category: 'coffee' | 'tea' | 'dessert';
-  price: number;
 };
 
 //==========================UTILS=============================//
@@ -215,28 +217,41 @@ const images = {
   dessert: importAll(require.context('./src/images/dessert', false, /\.(png|jpe?g|svg)$/)),
 };
 
-function initMenuPage() {
+export async function initMenuPage() {
   const menuSheet = document.getElementById('menu-sheet');
   const buttons = document.querySelectorAll<HTMLAnchorElement>('.menu-buttons li a');
   if (!menuSheet) return;
 
   let products: Product[] = [];
 
-  fetch('https://raw.githubusercontent.com/rolling-scopes-school/qualifying-stage/main/tasks/coffee-shop-layout/products.json')
-    .then(res => res.json())
-    .then((data: Product[]) => {
-      products = data;
-      renderGrid('coffee');
-    });
+  renderSkeleton();
+
+  try {
+    const response = await fetch('https://6kt29kkeub.execute-api.eu-central-1.amazonaws.com/products');
+    if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
+
+    const json = await response.json();
+    products = json.data;
+
+    await new Promise(resolve => setTimeout(resolve, 1200));
+
+    renderGrid('coffee');
+    setActiveButton('coffee');
+
+  } catch (err) {
+    console.error('Loading error:', err);
+    menuSheet.innerHTML = `<p class="error">Something went wrong. Please reload the page.</p>`;
+    return;
+  }
 
   function renderGrid(category: keyof typeof images) {
     const filtered = products.filter(item => item.category === category);
 
     menuSheet!.innerHTML = filtered.map((item, index) => `
-      <div class="menu-card">
+      <div class="menu-card fade-in">
         <a href="#">
           <div class="card-img">
-            <img src="${images[category][index]}" alt="${item.name}">
+            <img src="${images[category][index % images[category].length]}" alt="${item.name}">
           </div>
           <div class="card-content">
             <div class="card-text headling-3">
@@ -244,7 +259,9 @@ function initMenuPage() {
               <p class="card-description medium">${item.description}</p>
             </div>
             <div class="card-content-price headling-3">
-              <p class="card-price">$${item.price}</p>
+              <p class="card-price">
+                $${item.discountPrice || item.price}
+              </p>
             </div>
           </div>
         </a>
@@ -252,9 +269,24 @@ function initMenuPage() {
     `).join('');
   }
 
+  function renderSkeleton() {
+    const skeletons = Array.from({ length: 6 }).map(() => `
+      <div class="menu-card skeleton">
+        <div class="card-img skeleton-img"></div>
+        <div class="card-content">
+          <div class="skeleton-text skeleton-name"></div>
+          <div class="skeleton-text skeleton-desc"></div>
+          <div class="skeleton-price"></div>
+        </div>
+      </div>
+    `).join('');
+    menuSheet!.innerHTML = skeletons;
+  }
+
   function setActiveButton(category: keyof typeof images) {
     buttons.forEach(btn => {
-      const btnCategory = btn.querySelector('p:last-child')?.textContent?.toLowerCase();
+      const ps = btn.querySelectorAll('p');
+      const btnCategory = ps[1]?.textContent?.trim().toLowerCase();
       btn.classList.toggle('active', btnCategory === category);
     });
   }
@@ -262,7 +294,15 @@ function initMenuPage() {
   buttons.forEach(btn => {
     btn.addEventListener('click', e => {
       e.preventDefault();
-      const category = btn.querySelector('p:last-child')?.textContent?.toLowerCase() as keyof typeof images;
+
+      const ps = btn.querySelectorAll('p');
+      const category = ps[1]?.textContent?.trim().toLowerCase() as keyof typeof images;
+
+      if (!category) {
+        console.warn('Category not found');
+        return;
+      }
+
       setActiveButton(category);
       renderGrid(category);
     });
